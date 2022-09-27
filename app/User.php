@@ -15,8 +15,22 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'city', 'quarter', 'phone_number', 'password',
+        'name', 
+        'email', 
+        'city', 
+        'quarter', 
+        'phone_number', 
+        'validation_token',
+        'password',
     ];
+
+    // protected static function boot(){
+    //     parent::boot();
+        
+    //     static::created(function ($user){
+    //         $user->profile()
+    //     })
+    // }
 
     /**
      * The attributes that should be hidden for arrays.

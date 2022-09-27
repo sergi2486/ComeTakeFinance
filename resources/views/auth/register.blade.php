@@ -29,7 +29,7 @@
                             <label for="phone_number" class="col-md-4 control-label">Numéro(whatsapp)</label>
 
                             <div class="col-md-6">
-                                <input id="phone_number" type="text" class="form-control" name="phone_number" value="{{ old('phone_number') }}" required autofocus>
+                                <input id="phone_number" type="number" class="form-control" name="phone_number" value="{{ old('phone_number') }}" required autofocus>
 
                                 @if ($errors->has('phone_number'))
                                     <span class="help-block">

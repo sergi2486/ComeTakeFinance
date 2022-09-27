@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/confirm/{id}/{token}', 'Auth\RegisterController@confirm');
 
-Route::get('message', 'ConfirmMessageController@formMessageGoogle');
-Route::post("message", "ConfirmMessageController@sendMessageGoogle")->name('send.message.google');
+Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/profile', 'RegisterController@profile-user');

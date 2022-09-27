@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('city');
             $table->string('quarter');
             $table->string('email')->unique();
-            $table->string('validation_token');
+            $table->string('validation_token')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

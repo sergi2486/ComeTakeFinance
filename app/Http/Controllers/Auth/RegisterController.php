@@ -6,6 +6,11 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeUserMail;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use App\Notifications\RegisteredUser;
 
 class RegisterController extends Controller
 {
@@ -39,6 +44,17 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+        $user->notify(new RegisteredUser());
+       // $this->guard()->login($user);
+
+        return redirect('/login')->with('success', 'Votre compte a été crée, vous avez reçut un mail d\'activation a cette adresse '.$request->email);
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -57,6 +73,7 @@ class RegisterController extends Controller
         ]);
     }
 
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -65,12 +82,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+       
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'city' => $data['city'],
+            'phone_number' => $data['phone_number'],
             'quarter' => $data['quarter'],
+            'validation_token' => str_replace('/', '', bcrypt(str_random(50))),
             'password' => bcrypt($data['password']),
         ]);
+
+        
     }
+
+    public function confirm($id, $token){
+        $user = User::where('id', $id)->where('validation_token', $token)->first();
+
+        if($user){
+            $user->update(['validation_token' => null]);
+            $this->guard()->login($user);
+            
+            return redirect($this->redirectPath())->with('success', 'Votre compte a bien été confirmé');
+        } else {
+            return redirect('/login')->with('error', 'Ce lien n\'est pas valide');
+        }
+    }
+
 }
