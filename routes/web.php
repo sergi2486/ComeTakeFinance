@@ -20,4 +20,5 @@ Auth::routes();
 Route::get('/confirm/{id}/{token}', 'Auth\RegisterController@confirm');
 
 Route::get('/home', 'HomeController@index')->name('home');
-//Route::get('/profile', 'RegisterController@profile-user');
+Route::get('/order', 'OrderController@index')->name('order.index');
+Route::post('/addOrder', 'OrderController@addOrder')->name('addOrder');
