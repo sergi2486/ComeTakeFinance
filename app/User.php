@@ -24,13 +24,9 @@ class User extends Authenticatable
         'password',
     ];
 
-    // protected static function boot(){
-    //     parent::boot();
-        
-    //     static::created(function ($user){
-    //         $user->profile()
-    //     })
-    // }
+    public function orders(){
+        return $this->hasMany('App\Order');
+    }
 
     /**
      * The attributes that should be hidden for arrays.

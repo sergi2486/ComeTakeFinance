@@ -25,6 +25,10 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+
+        // Schema::table('orders', function(Blueprint $table){
+        //     $table->integer('user_id')->unsigned()->index();
+        // });
     }
 
     /**

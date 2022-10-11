@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +21,13 @@ Auth::routes();
 Route::get('/confirm/{id}/{token}', 'Auth\RegisterController@confirm');
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/order', 'OrderController@index')->name('order.index');
-Route::post('/addOrder', 'OrderController@addOrder')->name('addOrder');
+// Route::get('/order', 'OrderController@index')->name('order.index');
+// Route::get('/addOrder', 'OrderController@addOrder')->name('addOrder');
+Route::group(['middleware' => ['web']], function(){
+    Route::resource('order', 'OrderController');
+    Route::POST('addOrder', 'OrderController@addOrder')->name('addOrder');
+    
+});
+
+Route::post('/store', 'OrderController@store')->name('store');
+Route::get('/fetch-orders', 'OrderController@orders')->name('orders');

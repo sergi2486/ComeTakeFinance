@@ -16,14 +16,27 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('montant');
-            $table->integer('solde_a_rembouser');
+            $table->integer('solde_a_rembourser');
             $table->integer('delai_remboursement');
             $table->integer('nombre_versement');
             $table->string('bien_garanti');
             $table->integer('valeur_bien_garanti');
             $table->text('activite');
+            $table->string('contrat_bail');
+            $table->string('recu_impot');
+            $table->string('facture_bien');
+            $table->string('photo_entiere');
+            $table->string('photo_cni');
+            $table->string('photo_bien');
+            $table->string('photo_business');
             $table->timestamps();
         });
+
+         Schema::table('orders', function(Blueprint $table){
+            $table->integer('user_id')->unsigned()->index();
+        });
+
+        
     }
 
     /**

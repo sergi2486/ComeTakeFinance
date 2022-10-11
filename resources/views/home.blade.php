@@ -20,64 +20,105 @@
                 <hr>
                 
                 <!-- Button trigger modal -->
-                <button style="margin: 10px;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                <button style="margin: 10px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOrderModal">
                     Demander un financement
                 </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Demande de Financement</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-row">
-                                  <div class="form-group col-md-6">
-                                    <label for="">Nom:</label>
-                                    <input type="text" class="form-control" id="" placeholder="Email" readonly value="{{Auth::user()->name }}">
-                                  </div>
-                                  <div class="form-group col-md-6">
-                                    <label for="">Tél:</label>
-                                    <input type="text" class="form-control" id="" placeholder="" readonly value="{{Auth::user()->phone_number }}">
-                                  </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                      <label for="">Ville:</label>
-                                      <input type="text" class="form-control" id="" placeholder="Email" readonly value="{{Auth::user()->city }}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                      <label for="">Quartier:</label>
-                                      <input type="text" class="form-control" id="" placeholder="" readonly value="{{Auth::user()->quarter }}">
-                                    </div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                      <label for="">Montant du financement:</label>
-                                      <input type="number" class="form-control" id="" placeholder="Max: 500.000 FCFA" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                      <label for="">Quartier:</label>
-                                      <input type="text" class="form-control" id="" placeholder="" >
-                                    </div>
-                                </div>
-                                
-                                
-                                
-                              </form>
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Envoyer la demande</button>
-                        </div>
-                    </div>
-                    </div>
-                </div>
+                {{-- add new employee modal start --}}
+<div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+data-bs-backdrop="static" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Demande de financement</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <form action="#" method="POST" id="add_order_form" enctype="multipart/form-data">
+      
+      <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+      
+      <div class="modal-body p-4 bg-light">
+        <div class="row">
+          <div class="col-lg">
+            <label for="montant">Montant</label>
+            <input type="number"  id="montant" name="montant" class="form-control montant" placeholder="Entrer le montant" required>
+          </div>
+          <div class="col-lg">
+            <label for="solde_a_rembourser">Solde à rembourser</label>
+            <input type="number"  id="solde_a_rembourser" name="solde_a_rembourser" class="form-control" placeholder="" readonly>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            <label for="delai_remboursement">Délai de remboursement</label>
+            <input type="number" id="delai_remboursement" name="delai_remboursement" class="form-control" placeholder="">
+          </div>
+          <div class="col-lg">
+            <label for="nombre_versement">Nombre de versement</label>
+            <input type="number" id="nombre_versement"  name="nombre_versement" class="form-control" placeholder="" readonly>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            <label for="bien_garanti">Bien en garantie</label>
+            <input type="text" id="bien_garanti" name="bien_garanti" class="form-control" placeholder="Ex: Véhicule BMW" required>
+          </div>
+          <div class="col-lg">
+            <label for="valeur_bien_garanti">Valeur du bien en garantie</label>
+            <input type="number" id="valeur_bien_garanti" name="valeur_bien_garanti" class="form-control" placeholder="" required>
+          </div>
+        </div>
+        <div class="my-2">
+          <label for="email">Description de l'activité</label>
+          <textarea class="form-control" rows="4" name="activite"  placeholder="" required></textarea>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            <label for="contrat_bail">Contrat de bail</label>
+            <input type="file" name="contrat_bail" class="form-control" placeholder="" >
+          </div>
+          <div class="col-lg">
+            <label for="recu_impot">Reçu de paiement impôt</label>
+            <input type="file" name="recu_impot" class="form-control" placeholder="" >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            <label for="facture_bien">Facture du bien</label>
+            <input type="file" name="facture_bien" class="form-control" placeholder="" >
+          </div>
+          <div class="col-lg">
+            <label for="photo_entiere">Photo entière</label>
+            <input type="file" name="photo_entiere" class="form-control" placeholder="" >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg">
+            <label for="photo_cni"> CNI</label>
+            <input type="file" name="photo_cni" class="form-control" placeholder="" >
+          </div>
+          <div class="col-lg">
+            <label for="photo_bien">Photo du bien</label>
+            <input type="file" name="photo_bien" class="form-control" placeholder="" >
+          </div>
+        </div>
+        <div class="my-2">
+          <label for="photo_business">Photo du business</label>
+          <input type="file" name="photo_business" class="form-control" placeholder="" >
+        </div>
+        <div class="my-2">
+          <label for=""></label>
+          <input type="hidden" name="etat_demande" class="form-control" placeholder="" >
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+        <button type="submit" id="add_order_btn" class="btn btn-primary">Demander un financement</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
                 <table class="table table-bordered table-dark">
                     <thead>
                       <tr>
@@ -88,7 +129,9 @@
                     <tbody>
                       <tr>
                         <th scope="row">Etat de la demande</th>
-                        <td colspan="3">Aucune demande</td>
+                        <td colspan="3" id="etat_demande">
+                          
+                        </td>
                       </tr>
                       <tr>
                         <th scope="row">Solde demandé</th>
