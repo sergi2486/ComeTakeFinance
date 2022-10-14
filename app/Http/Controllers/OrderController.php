@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class OrderController extends Controller
@@ -100,6 +101,7 @@ class OrderController extends Controller
                         <th>Delai</th>
                         <th>Nombre</th>
                         <th>Bien</th>
+                        <th>Etat de la demande</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -116,17 +118,23 @@ class OrderController extends Controller
                         <td>'.$order->nombre_versement.'</td>
                         <td>'.$order->bien_garanti.'</td>
                         <td>
-                            <a href="#" id="'.$order->id. '" class="text-success mx-1 editIcon"
-                            data-bs-toggle="modal" data-bs-target="#editOrderModal">
-                                <i class="bi-pencil-square h4"></i>
+                            <a href="#" id="'.$order->user_id. '" class="btn btn-primary btn-sm etat_demande "
+                            data-bs-toggle="modal" data-bs-target="#acceptationDemande">
+                                
                             </a>
+                        
+                        </td>
+                        
+                        <td>
+                            
                             <a href="#" id="'.$order->id. '" class="text-danger mx-1 deleteIcon"
-                            data-bs-toggle="modal" data-bs-target="#deleteOrderModal">
+                            data-bs-toggle="modal" data-bs-target="#editOrderModal">
                                 <i class="bi-trash h4"></i>
                             </a>
                         </td>
                     </tr>';
                 }
+
                 $output .= '</tbodry></table>';
                 echo $output;
             
@@ -135,10 +143,31 @@ class OrderController extends Controller
         }
     }
 
-    public function getUser(){
-        $user = DB::table('orders')
-                    ->join('users', 'users.id', '=', 'orders.user_id')
-                    ->select('users.name')
-                    ->get();
+    public function state(Request $request){
+        $id = $request->user_id;
+        $user = Order::find($id);
+        return response()->json($user);
     }
+
+    public function update(Request $request){
+
+        $user = Order::find($request->user_id);
+
+        $userData = [
+            'etat_demande' => 'Eligible pour une vérification'
+        ];
+
+        $user->update($userData);
+
+        return response()->json([
+            'status' => 200
+        ]);
+
+    }
+
+    public function getStateOrder(){
+        $user = DB::table('order')->where('id', '=', Auth::user()->id);
+        return view('home', compact('user'));
+    }
+
 }

@@ -81,7 +81,10 @@
             url: '{{route('orders')}}',
             method: 'get',
             success: function(res){
-              $('#show_all_orders').html(res)
+              $('#show_all_orders').html(res);
+              $('table').DataTable({
+                order: [0, 'asc']
+              });
             }
           });
         }
@@ -167,11 +170,53 @@
               $('#addOrderModal').modal('hide');
               $('#add_order_form')[0].reset();
               $('#add_order_btn').text('Demander un financement');
-             
-              
             }
            });
         });
+
+        $('#accepter').click(function(e){
+            e.preventDefault();
+            
+            //let user_id = $('#user_id').val();
+            const fd = new FormData(document.getElementById('etat_demande_form'));
+          
+            $.ajax({
+              url: '{{ route('update') }}',
+              method: 'post',
+              //data: {user_id: user_id},
+              data: fd,
+              cache: false,
+              processData: false,
+              contentType: false,
+              success: function(res){
+                $('#etat_demande_form')[0].reset();
+                $('#acceptationDemande').modal('hide')
+              }
+            });
+          });
+
+        $(document).on('click', '.etat_demande', function(e){
+          e.preventDefault();
+          let user_id = $(this).attr('id');
+          
+          var token =  $('input[name="_token"]').attr('value');
+
+            $.ajax({
+              url: '{{ route('state_order') }}',
+              method: 'get',
+              data: {
+                user_id: user_id,
+                _token: token
+              },
+
+              success: function(res){
+                $('#user_id').val(res.id); 
+              }
+            });
+          
+        });
+
+        
       });
       </script>
       <div class="container">

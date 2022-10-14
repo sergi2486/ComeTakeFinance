@@ -152,6 +152,38 @@
 </div>
 {{-- edit employee modal end --}}
 
+
+{{-- Acceptation demande financement --}}
+<div class="modal fade" id="acceptationDemande" tabindex="-1" aria-labelledby="exampleModalLabel"
+  data-bs-backdrop="static" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Acceptation demande</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="" id="etat_demande_form">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="user_id" id="user_id">
+        
+        
+        <div class="modal-body p-4 bg-light">
+          <div>
+            Vous êtes sur le point d'accepter la demande de financement de ce client, êtes-vous vraiment sur de poursuivre?
+          </div> 
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Non j'annule</button>
+          <button type="submit" id="accepter" class="btn btn-success">Oui</button>
+        </div>
+      </form>
+        
+      
+    </div>
+  </div>
+</div>
+
 <body class="bg-light">
   <div class="container">
     <div class="row my-5">
@@ -159,8 +191,8 @@
         <div class="card shadow">
           <div class="card-header bg-secondary d-flex justify-content-between align-items-center">
             <h3 class="text-light">Gestion des financements</h3>
-            <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addOrderModal"><i
-                class="bi-plus-circle me-2"></i>Nouvelle demande</button>
+            {{-- <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addOrderModal"><i
+                class="bi-plus-circle me-2"></i>Nouvelle demande</button> --}}
           </div>
           <div class="card-body" id="show_all_orders">
             <h1 class="text-center text-secondary my-5">Chargement...</h1>

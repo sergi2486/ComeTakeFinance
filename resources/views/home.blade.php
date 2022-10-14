@@ -18,11 +18,13 @@
                 </div>
                
                 <hr>
-                
-                <!-- Button trigger modal -->
-                <button style="margin: 10px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOrderModal">
-                    Demander un financement
+                @if ($user->etat_demande != "En attente d'acceptation" )
+                  <button style="margin: 10px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOrderModal">
+                    <i class="bi-plus-circle"></i> Demander un financement
                 </button>
+                @endif
+                <!-- Button trigger modal -->
+                
 
                 {{-- add new form order modal start --}}
 @if (Auth::check())
@@ -145,7 +147,7 @@ data-bs-backdrop="static" aria-hidden="true">
                           @if ( $user ) 
                             {{ $user->etat_demande }}
                           @else
-                            Aucune demande de financement faite
+                            Aucune demande de financement en cours
                           @endif
                         </td>
                       </tr>

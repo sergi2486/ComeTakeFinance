@@ -32,3 +32,5 @@ Route::group(['middleware' => ['web']], function(){
 
 Route::post('/store', 'OrderController@store')->name('store');
 Route::get('/fetch-orders', 'OrderController@orders')->name('orders');
+Route::get('/state_order', 'OrderController@state')->name('state_order');
+Route::post('/update_state', 'OrderController@update')->name('update');
