@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Order;
+use Illuminate\Support\Facades\DB;
 
 
 class OrderController extends Controller
@@ -64,6 +65,7 @@ class OrderController extends Controller
             'photo_cni' => $fileNameCNI,
             'photo_bien' => $fileNameBien,
             'photo_business' => $fileNameBusiness,
+            'user_id' => $request->user_id,
         ];
 
 
@@ -78,7 +80,11 @@ class OrderController extends Controller
     }
 
     public function orders(){
-        $orders = Order::all();
+        //$orders = Order::all();
+        $orders = DB::table('orders')
+                ->join('users', 'users.id', '=', 'orders.user_id')
+                ->select('users.name', 'orders.*')
+                ->get();
         $output = '';
 
         if($orders->count() > 0){
@@ -87,7 +93,8 @@ class OrderController extends Controller
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Avatar</th>
+                        <th>Photo</th>
+                        <th>Nom</th>
                         <th>Montant</th>
                         <th>Solde</th>
                         <th>Delai</th>
@@ -102,6 +109,7 @@ class OrderController extends Controller
                     $output .= '<tr>
                         <td>'.$order->id.'</td>
                         <td><img src="images/entieres/'.$order->photo_entiere.'" width="50" class="img-thumnail rounded-circle" /></td>
+                        <td>'.$order->name.'</td>
                         <td>'.$order->montant.'</td>
                         <td>'.$order->solde_a_rembourser.'</td>
                         <td>'.$order->delai_remboursement.'</td>
@@ -125,5 +133,12 @@ class OrderController extends Controller
         } else {
             echo '<h1 class="text-center text-secondary my-5">Pas de demande pour le moment</h1>';
         }
+    }
+
+    public function getUser(){
+        $user = DB::table('orders')
+                    ->join('users', 'users.id', '=', 'orders.user_id')
+                    ->select('users.name')
+                    ->get();
     }
 }

@@ -24,7 +24,8 @@
                     Demander un financement
                 </button>
 
-                {{-- add new employee modal start --}}
+                {{-- add new form order modal start --}}
+@if (Auth::check())
 <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="exampleModalLabel"
 data-bs-backdrop="static" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered">
@@ -108,8 +109,9 @@ data-bs-backdrop="static" aria-hidden="true">
         </div>
         <div class="my-2">
           <label for=""></label>
-          <input type="hidden" name="etat_demande" class="form-control" placeholder="" >
+          <input type="hidden" name="etat_demande" value="En attente d'acceptation" class="form-control" placeholder="" >
         </div>
+        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}" />
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -119,6 +121,16 @@ data-bs-backdrop="static" aria-hidden="true">
   </div>
 </div>
 </div>
+@else
+  <div class="alert alert-danger">
+    Vous devez vous connectez !
+  </div>
+@endif
+<div id="show_order_user">
+  
+</div>
+    
+
                 <table class="table table-bordered table-dark">
                     <thead>
                       <tr>
@@ -130,24 +142,47 @@ data-bs-backdrop="static" aria-hidden="true">
                       <tr>
                         <th scope="row">Etat de la demande</th>
                         <td colspan="3" id="etat_demande">
-                          
+                          @if ( $user ) 
+                            {{ $user->etat_demande }}
+                          @else
+                            Aucune demande de financement faite
+                          @endif
                         </td>
                       </tr>
                       <tr>
                         <th scope="row">Solde demandé</th>
-                        <td>CFA 0</td>  
+                        <td>CFA 
+                          @if ( $user ) 
+                            {{ $user->montant }}
+                          @else
+                            0
+                          @endif
+                        </td>  
                       </tr>
                       <tr>
                         <th scope="row">Solde à rembourser</th>
-                        <td>CFA 0</td>  
+                        <td>CFA 
+                          @if ($user)
+                           {{ $user->solde_a_rembourser }}
+                          @else
+                            0
+                          @endif
+                        </td>  
                       </tr>
                       <tr>
-                        <th scope="row">Montant des versements</th>
-                        <td colspan="2">CFA 0</td>
+                        <th scope="row">Nombre de versements</th>
+                        <td colspan="2">CFA 
+                          @if ($user)
+                            {{ $user->nombre_versement }}
+                          @else
+                           0
+                          @endif
+                        </td>
                         
                       </tr>
                     </tbody>
                   </table>
+        
                 <div class="panel-body">
                     @if (session('status'))
                         <div class="alert alert-success">

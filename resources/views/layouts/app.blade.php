@@ -68,6 +68,11 @@
       <script type="text/javascript">
       $(function(){
 
+        let delai = [2592000, 40, 50, 60];
+        let temps = [3, 4, 5, 6];
+        var days, hours, minutes, seconds;
+        var state_order = ['En attente d\'acceptation', 'Eligible pour une vérification', 'Validée' ]
+
         //récupérer toutes les demandes
         fetchAllOrder();
         function fetchAllOrder(){
@@ -81,21 +86,16 @@
           });
         }
 
-        // funciton getUserCheck(){
-        //   $.ajax({
-        //     url: ,
-        //     method: 'get',
-        //     success: function(res){
-
-        //     }
-        //   })
-        // }
+        function getUserCheck(){
+          $.ajax({
+            url: '{{ route('home') }}',
+            method: 'get',
+            success: function(res){
+              $('#show_order_user').html(res)
+            }
+          });
+        }
         
-        let delai = [2592000, 40, 50, 60];
-        let temps = [3, 4, 5, 6];
-        var days, hours, minutes, seconds;
-        var state_order = ['En attente d\'acceptation', 'Eligible pour une vérification', 'Validée' ]
-
         //var x = setInterval(decrementerDelai1, 1000)
         function decrementerDelai1(){
           delai[0] = delai[0] - 1;
@@ -104,9 +104,7 @@
             clearTimout(x)
           }
         }
-
-        
-        
+  
         //console.log(times[0]);
         
         $(document).on('change', '#montant', function(e){
@@ -158,6 +156,7 @@
                   'success'
                 );
                 fetchAllOrder();
+               
               }else{
                 Swal.fire(
                   'Erreur',

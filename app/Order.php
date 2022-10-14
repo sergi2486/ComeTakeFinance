@@ -21,7 +21,9 @@ class Order extends Model
         'photo_entiere',
         'photo_cni',
         'photo_bien', 
-        'photo_business'
+        'photo_business',
+        'user_id',
+        'etat_demande'
     ];
 
     public function user(){

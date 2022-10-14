@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('bien_garanti');
             $table->integer('valeur_bien_garanti');
             $table->text('activite');
+            $table->text('etat_demande');
             $table->string('contrat_bail');
             $table->string('recu_impot');
             $table->string('facture_bien');
@@ -32,9 +33,7 @@ class CreateOrdersTable extends Migration
             $table->timestamps();
         });
 
-         Schema::table('orders', function(Blueprint $table){
-            $table->integer('user_id')->unsigned()->index();
-        });
+        
 
         
     }

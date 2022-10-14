@@ -84,6 +84,7 @@
             <label for="photo_business">Photo du business</label>
             <input type="file" name="photo_business" class="form-control" placeholder="E-mail" >
           </div>
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -108,6 +109,7 @@
         @csrf
         <input type="hidden" name="emp_id" id="emp_id">
         <input type="hidden" name="emp_avatar" id="emp_avatar">
+        
         <div class="modal-body p-4 bg-light">
           <div class="row">
             <div class="col-lg">
@@ -136,8 +138,9 @@
             <input type="file" name="avatar" class="form-control">
           </div>
           <div class="mt-2" id="avatar">
-
+            
           </div>
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
